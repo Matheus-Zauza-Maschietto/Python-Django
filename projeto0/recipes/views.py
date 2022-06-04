@@ -8,4 +8,8 @@ def home(request):
 
 
 def recipe(request, id):
-    return render(request, 'recipes/pages/recipe-view.html', status=200, context={'recipe': make_recipe()})
+    return render(request, 'recipes/pages/recipe-view.html', status=200, context={'recipe': make_recipe(), 'is_detail_page': True, })
+
+
+def teste(request):
+    return render(request, 'recipes/pages/teste.html', status=200, context={'range': range(10), 'atletas': range(2)})

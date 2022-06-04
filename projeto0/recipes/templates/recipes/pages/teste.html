@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testes</title>
+    <style>
+        li{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <ul>
+        {% for numero in range reversed %}
+            <li>{{ numero }}</li>
+        {% endfor %}
+    </ul>
+    {% if atletas|length < 3 %}
+    Number of athletes: {{ atletas|length }}
+    
+    {% elif atletas|length > 3 %}
+        Athletes should be out of the locker room soon!
+    
+    {% else %}
+        No athletes.
+    {% endif %}
+
+</body>
+</html>

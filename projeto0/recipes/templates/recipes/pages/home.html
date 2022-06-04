@@ -6,7 +6,7 @@
 <div class="main-content container main-content-list">
     {% for recipe in recipes %}
     
-        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html'|linebreaksbr %}
      {% endfor %}
 </div>
 {% endblock content %}

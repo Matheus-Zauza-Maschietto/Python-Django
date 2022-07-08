@@ -5,7 +5,8 @@ from recipes.models import Recipe
 
 
 def home(request):
-    return render(request, 'recipes/pages/home.html', status=200, context={'recipes': [make_recipe() for _ in range(10)]})
+    recipes = Recipe.objects.all().order_by('-id')
+    return render(request, 'recipes/pages/home.html', status=200, context={'recipes': recipes})
 
 
 def recipe(request, id):

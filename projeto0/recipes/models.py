@@ -28,7 +28,8 @@ class Recipe(models.Model):
     cover = models.ImageField(upload_to='projeto0/recipes/covers/%Y/%m/%d/')
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
     def __str__(self):
         return self.tittle

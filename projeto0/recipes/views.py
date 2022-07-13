@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from utils.recipes.factory import make_recipe
 from recipes.models import Recipe
@@ -10,9 +10,19 @@ def home(request):
 
 
 def category(request, category_id):
-    categories = Recipe.objects.filter(
+    recipes = Recipe.objects.filter(
         category__id=category_id, is_published=True).order_by('-id')
-    return render(request, 'recipes/pages/category.html', status=200, context={'recipes': categories})
+
+    if not recipes:
+        raise Http404('not found')
+        '''
+        Outros modos de encaminhar um erro 404
+        1° Usando getattr dentro de getattr
+        category_name = getattr(
+        getattr(recipes.first(), 'category', None), 'name', 'not found')
+        2° Usando  '''
+    else:
+        return render(request, 'recipes/pages/category.html', status=200, context={'recipes': recipes, 'title': f'{recipes.first().category.name} - Category | '})
 
 
 def recipe(request, id):

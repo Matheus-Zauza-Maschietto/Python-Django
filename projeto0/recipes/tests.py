@@ -8,6 +8,13 @@ class RecipeURLsTest(TestCase):
         self.assertEqual(url, '/')
 
     def test_recipe_category_url_is_correct(self):
-        url = reverse('recipes:category')
-        self.assertEqual(url, '/')
-        # Create your tests here.
+        url = reverse('recipes:category', kwargs={'category_id': 1})
+        self.assertEqual(url, '/recipes/category/1/')
+
+    def test_recipe_recipe_url_is_correct(self):
+        url = reverse('recipes:recipe', kwargs={'id': 1})
+        self.assertEqual(url, '/recipes/1/')
+
+    def test_recipe_teste_url_is_correct(self):
+        url = reverse('recipes:teste')
+        self.assertEqual(url, '/teste/')

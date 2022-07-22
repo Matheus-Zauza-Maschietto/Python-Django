@@ -56,3 +56,55 @@ class RecipeViewsTeste(RecipeTestBase):
         response = self.client.get(reverse('recipes:home'))
         response_recipes = response.context['recipes']
         self.assertEqual(len(response_recipes), 1)
+
+    def test_recipe_category_template_loads_recipes(self):
+        needed_title = 'Category Test'
+        self.make_recipe(tittle=needed_title)
+
+        response = self.client.get(
+            reverse('recipes:category', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+        response_recipes = response.context['recipes']
+
+        self.assertIn(needed_title, content)
+
+    def test_recipe_detaiil_template_loads_the_correct_recipe(self):
+        needed_title = 'This is a detail page - It load one recipe'
+
+        self.make_recipe(tittle=needed_title)
+
+        response = self.client.get(reverse('recipes:recipe', kwargs={'id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_recipe_home_template_dont_load_recipes_not_published(self):
+        # Test recipe is_publishd False dont show
+
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:home'))
+
+        self.assertIn(
+            'not found', response.content.decode('utf-8').lower()
+        )
+
+    def test_recipe_category_template_dont_load_recipes_not_published(self):
+        # Test recipe is_publishd False dont show
+
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(
+            reverse('recipes:category', kwargs={'category_id': recipe.category.id}))
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_recipe_detail_template_dont_load_recipe_not_published(self):
+        # Test recipe is_publishd False dont show
+
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(
+            reverse('recipes:recipe', kwargs={'id': recipe.id}))
+
+        self.assertEqual(response.status_code, 404)

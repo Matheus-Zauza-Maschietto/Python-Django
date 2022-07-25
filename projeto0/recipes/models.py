@@ -1,8 +1,5 @@
-from distutils.command.upload import upload
-from pyexpat import model
-from unicodedata import category
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class Category(models.Model):
@@ -25,7 +22,8 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
-    cover = models.ImageField(upload_to='project0/recipes/covers/%Y/%m/%d/')
+    cover = models.ImageField(
+        upload_to='project0/recipes/covers/%Y/%m/%d/', default='', blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(

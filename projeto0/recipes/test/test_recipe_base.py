@@ -36,8 +36,8 @@ class RecipeTestBase(TestCase):
         servings=5,
         servings_unit='Porções',
         preparation_steps='Recipe Preparation Steps',
-        preparation_steps_is_html=False,
-        is_published=True,
+        preparation_steps_is_html=True,
+        is_published=False,
         cover=r'projeto0/recipes/covers/2022/07/07/MRS_9135.JPG',
     ):
         if category == None:

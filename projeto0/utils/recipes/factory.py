@@ -15,25 +15,33 @@ fake = Faker('pt_BR')
 
 def make_recipe():
     return {
-        'id': fake.random_number(digits=2, fix_len=True),
-        'title': fake.sentence(nb_words=6),
+        'id': None,
+        'tittle': fake.sentence(nb_words=6),
         'description': fake.sentence(nb_words=12),
+        'slug': 'receita-qualquer',
         'preparation_time': fake.random_number(digits=2, fix_len=True),
         'preparation_time_unit': 'Minutos',
         'servings': fake.random_number(digits=2, fix_len=True),
         'servings_unit': 'Porção',
         'preparation_steps': fake.text(3000),
+        'preparation_steps_is_html': False,
         'created_at': fake.date_time(),
-        'author': {
-            'first_name': fake.first_name(),
-            'last_name': fake.last_name(),
-        },
-        'category': {
-            'name': fake.word()
-        },
-        'cover': {
-            'url': 'https://loremflickr.com/%s/%s/food,cook' % rand_ratio(),
-        }
+        'is_published': True,
+        'cover': 'https://loremflickr.com/%s/%s/food,cook' % rand_ratio(),
+        'category': 1,
+        'author': 1
+
+    }
+
+
+def make_category():
+    return {'name': fake.word()}
+
+
+def make_user():
+    return {
+        'first_name': fake.first_name(),
+        'last_name': fake.last_name(),
     }
 
 

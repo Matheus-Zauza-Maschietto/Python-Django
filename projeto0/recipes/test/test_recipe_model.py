@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+
 from .test_recipe_base import Recipe, RecipeTestBase
 
 
@@ -25,7 +26,7 @@ class RecipeModelTest(RecipeTestBase):
             author=self.make_user(username='newuser'),
             tittle='Recipe Title',
             description='Recipe Description',
-            slug='recipe-slug',
+            slug='recipe-slug-for-no-defaults',
             preparation_time=10,
             preparation_time_unit='Minutos',
             servings=5,

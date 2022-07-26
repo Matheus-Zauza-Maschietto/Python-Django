@@ -1,6 +1,5 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-
 from recipes.models import Recipe
 
 
@@ -20,6 +19,13 @@ def category(request, category_id):
 def recipe(request, id):
     recipe = get_object_or_404(Recipe, id=id, is_published=True)
     return render(request, 'recipes/pages/recipe-view.html', status=200, context={'recipe': recipe, 'is_detail_page': True, })
+
+
+def search(request):
+    search_term = request.GET.get('q')
+    if not search_term:
+        raise Http404()
+    return render(request, 'recipes/pages/search.html')
 
 
 def teste(request):

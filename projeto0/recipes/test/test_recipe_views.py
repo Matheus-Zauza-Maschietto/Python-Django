@@ -29,7 +29,8 @@ class RecipeViewsTeste(RecipeTestBase):
 
     def test_recipe_home_view_returns_status_code_200_OK(self):
         self.make_recipe()
-        response = self.client.get(reverse('recipes:home'))
+        url = reverse('recipes:home')
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_recipe_home_view_loads_correct_template(self):
@@ -107,4 +108,17 @@ class RecipeViewsTeste(RecipeTestBase):
         response = self.client.get(
             reverse('recipes:recipe', kwargs={'id': recipe.id}))
 
+        self.assertEqual(response.status_code, 404)
+
+    def test_recipe_search_uses_correct_view_function(self):
+        url = reverse('recipes:search')
+        resolved = resolve(url)
+        self.assertIs(resolved.func, views.search)
+
+    def test_recipe_search_loads_correct_template(self):
+        response = self.client.get(reverse('recipes:search')+'?q=teste')
+        self.assertTemplateUsed(response, 'recipes/pages/search.html')
+
+    def test_recipe_search_raises_404_if_no_search_term(self):
+        response = self.client.get(reverse('recipes:search'))
         self.assertEqual(response.status_code, 404)

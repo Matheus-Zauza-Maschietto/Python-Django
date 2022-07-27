@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.urls import resolve, reverse
 from recipes import views
 
@@ -23,7 +25,7 @@ class RecipeViewsTeste(RecipeTestBase):
         self.assertIs(view.func, views.teste)
 
     '''
-    OBS: testes que envolver client.get não funcionam, por algum motivo o cliente do django não consegue se conectar ao servidor de desenvolvimento. 
+    OBS: testes que envolver client.get não funcionam, por algum motivo o cliente do django não consegue se conectar ao servidor de desenvolvimento.
     Problema resolvido, é necesario adicionar dados aos modais de fixtures para que seja retornado algo
     '''
 
@@ -31,12 +33,13 @@ class RecipeViewsTeste(RecipeTestBase):
         self.make_recipe()
         url = reverse('recipes:home')
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response, 200)
 
     def test_recipe_home_view_loads_correct_template(self):
         self.make_recipe()
-        response = self.client.get(reverse('recipes:home'), secure=True)
-        self.assertTemplateUsed(response, 'recipes/pages/home.html')
+        response = self.client.get(reverse('recipes:home'))
+        self.assertTemplateUsed(
+            response, 'recipes/pages/home.html', secure=True)
 
     def test_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):
         response = self.client.get(reverse('recipes:home'))

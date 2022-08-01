@@ -1,6 +1,7 @@
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from recipes.models import Recipe
+from django.db.models import Q
 
 
 def home(request):
@@ -27,7 +28,13 @@ def search(request):
     if not search_term:
         raise Http404()
 
-    return render(request, 'recipes/pages/search.html', context={'page_title': f'search for "{search_term}" |'})
+    recipes = Recipe.objects.filter(
+        Q(Q(tittle__icontains=search_term) |
+          Q(description__icontains=search_term)),
+        Q(is_published=True)).order_by('-id')
+
+    return render(request, 'recipes/pages/search.html', context={'page_title': f'search for "{search_term}" |',
+                                                                 'recipes': recipes, })
 
 
 def teste(request):

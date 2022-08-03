@@ -20,11 +20,10 @@ def home(request):
 
     pagination_range = make_pagination_range(
         paginator.page_range,
-        2,
+        4,
         current_page
     )
-
-    return render(request, 'recipes/pages/home.html', status=200, context={'recipes': page_obj, 'pages': pagination_range})
+    return render(request, 'recipes/pages/home.html', status=200, context={'recipes': page_obj, 'pagination_range': pagination_range})
 
 
 def category(request, category_id):

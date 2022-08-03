@@ -34,3 +34,7 @@ class RecipeCategoryViewsTeste(RecipeTestBase):
             reverse('recipes:category', kwargs={'category_id': recipe.category.id}))
 
         self.assertEqual(response.status_code, 404)
+
+    def test_recipe_category_pagination_objects_per_page(self):
+        for recipe in range(0, 20):
+            ...

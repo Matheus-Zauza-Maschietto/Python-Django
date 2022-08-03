@@ -1,0 +1,11 @@
+
+    <div class="container pagination">
+        <div class="pagination-content">
+            {% for page in pagination_range.pagination %}
+                <a href="?page={{pages}}" class="page-link page-item">
+                    {{pages}}
+
+                </a>
+            {% endfor %}
+        </div>
+    </div>

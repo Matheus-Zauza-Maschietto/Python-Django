@@ -19,7 +19,7 @@ class RecipeHomeViewsTeste(RecipeTestBase):
         self.make_recipe()
         response = self.client.get(reverse('recipes:home'))
         self.assertTemplateUsed(
-            response, 'recipes/pages/home.html', secure=True)
+            response, 'recipes/pages/home.html')
 
     def test_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):
         response = self.client.get(reverse('recipes:home'))
@@ -41,3 +41,12 @@ class RecipeHomeViewsTeste(RecipeTestBase):
         self.assertIn(
             'not found', response.content.decode('utf-8').lower()
         )
+
+    def test_recipe_home_pagination_how_many_objects_per_page(self):
+        author = self.make_user()
+        category = self.make_category()
+        for recipe in range(0, 20):
+            self.make_recipe(author=author, category=category,
+                             slug=f'minha-slug-numero-{recipe}')
+
+        assert 1 == 1
